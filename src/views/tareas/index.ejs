@@ -1,0 +1,56 @@
+<%- include('../partials/header') %>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Listado de Tareas</h1>
+        <a href="/tareas/create" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Nueva Tarea
+        </a>
+    </div>
+
+    <% if (tareas.length===0) { %>
+        <div class="alert alert-info">No hay tareas registradas</div>
+    <% } else { %>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Imagen</th>
+                        <th>Proyecto</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% tareas.forEach(tarea=> { %>
+                        <tr>
+                            <td><%= tarea.id %></td>
+                            <td><%= tarea.titulo %></td>
+                            <td><%= tarea.descripcion %></td>
+                            <td>
+                                <% if (tarea.imagen) { %>
+                                    <img src="<%= tarea.imagen %>" alt="Imagen tarea" class="img-thumbnail" width="100">
+                                <% } else { %>
+                                    <span class="text-muted">Sin imagen</span>
+                                <% } %>
+                            </td>
+                            <td><%= tarea.Proyecto.nombre %></td>
+                            <td>
+                                <div class="btn-group" role="group">
+                                    <a href="/tareas/<%= tarea.id %>/edit" class="btn btn-sm btn-warning">
+                                        <i class="bi bi-pencil-square"></i> Editar
+                                    </a>
+                                    <form action="/tareas/<%= tarea.id %>/delete" method="POST" class="ms-2">
+                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('¿Estás seguro de eliminar esta tarea?')">
+                                            <i class="bi bi-trash"></i> Eliminar
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    <% } %>
+<%- include('../partials/footer') %>

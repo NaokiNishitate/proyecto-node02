@@ -1,0 +1,56 @@
+<%- include('../partials/header') %>
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Editar Tarea</h3>
+                </div>
+                <div class="card-body">
+                    <form action="/tareas/<%= tarea.id %>/update" method="POST" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="titulo" class="form-label">Título</label>
+                            <input type="text" class="form-control" id="titulo" name="titulo" value="<%= tarea.titulo %>" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            <textarea class="form-control" id="descripcion" name="descripcion" rows="3" required><%= tarea.descripcion %></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="imagen" class="form-label">Imagen Actual</label>
+                            <% if (tarea.imagen) { %>
+                                <div class="mb-2">
+                                    <img src="<%= tarea.imagen %>" alt="Imagen actual" class="img-thumbnail"
+                                        width="150">
+                                </div>
+                                <% } else { %>
+                                    <p class="text-muted">No hay imagen cargada</p>
+                                    <% } %>
+                                        <input type="file" class="form-control" id="imagen" name="imagen"
+                                            accept="image/*">
+                                        <div class="form-text">Dejar en blanco para mantener la imagen actual</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="proyecto_id" class="form-label">Proyecto</label>
+                            <select class="form-select" id="proyecto_id" name="proyecto_id" required>
+                                <% proyectos.forEach(proyecto=> { %>
+                                    <option value="<%= proyecto.id %>" <%=tarea.proyecto_id==proyecto.id ? 'selected'
+                                        : '' %>>
+                                        <%= proyecto.nombre %>
+                                    </option>
+                                    <% }) %>
+                            </select>
+                        </div>
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                            <a href="/tareas" class="btn btn-secondary me-md-2">
+                                <i class="bi bi-arrow-left"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save"></i> Actualizar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<%- include('../partials/footer') %>
